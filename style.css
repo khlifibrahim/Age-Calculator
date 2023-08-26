@@ -2,7 +2,7 @@
 :root {
 
     /* Primary */
-    --Purple: hsl(259, 100%, 65%);
+    --Purple: rgb(133, 77, 255);
     --Light-red: hsl(0, 100%, 67%);
 
     /* Neutrall */
@@ -49,6 +49,10 @@ body {
     letter-spacing: 2px;
     color: var(--Smokey-grey);
 }
+.container .inputs p.errorInput {
+    color: var(--Light-red);
+}
+
 
 .container .inputs input {
     margin-top: 8px;
@@ -61,7 +65,9 @@ body {
     font-size: 32px;
     font-weight: 800;
 }
-
+.container .inputs input.errorInput {
+    border-color: var(--Light-red);
+}
 .container .inputs input:focus {
 border-color: var(--Purple);
 }
@@ -110,13 +116,16 @@ border-color: var(--Purple);
     height: 100%;
     object-fit: cover;
 }
-
-.container .result p {
+.container .result div{
     font-style: italic;
     font-weight: 800;
     font-size: 64px;
     color: var(--Off-black);
 }
-.container .result p span{
+.container .result div p{
     color: var(--Purple);
+}
+
+#resultYear, #resultMonth, #resultDay {
+    display: flex;
 }
