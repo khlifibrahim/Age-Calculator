@@ -17,6 +17,7 @@
     font-family: 'Poppins';
     margin: 0;
     padding: 0;
+    transition: all ease .3s;
 }
 
 body {
@@ -24,7 +25,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    
 }
 
 .container {
@@ -37,10 +37,10 @@ body {
 
 .container .inputs {
     display: flex;
-    gap: 64px;
+    width: 100%;
 }
 .container .inputs .box{
-    width: 150px;
+    width: 100%;
 }
 
 .container .inputs p{
@@ -49,15 +49,10 @@ body {
     letter-spacing: 2px;
     color: var(--Smokey-grey);
 }
-.container .inputs p.errorInput {
-    color: var(--Light-red);
-}
-
-
 .container .inputs input {
     margin-top: 8px;
     padding: 12px;
-    width: 100%;
+    width: 120px;
     height: 40px;
     border-radius: 8px;
     border: 2px solid var(--Light-grey);
@@ -65,24 +60,34 @@ body {
     font-size: 32px;
     font-weight: 800;
 }
-.container .inputs input.errorInput {
-    border-color: var(--Light-red);
-}
+
 .container .inputs input:focus {
-border-color: var(--Purple);
+    border-color: var(--Purple);
 }
 
 .container .inputs input::placeholder {
     color: var(--Smokey-grey);
 }
-
+.container .inputs .box.errorInput p {
+    color: var(--Light-red) !important;
+    display: block !important;
+}
+.container  .inputs .box.errorInput input {
+    border-color: var(--Light-red);
+}
 .container .inputs .error{
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 1px;
+    display: none;
     margin-top:8px;
     font-size: 10px;
     font-weight: normal;
     color: var(--Light-red);
 }
-
+.box.show .inputs .error{
+    display: block;
+}
 .container .submit {
     display: flex;
     align-items: center;
@@ -128,4 +133,41 @@ border-color: var(--Purple);
 
 #resultYear, #resultMonth, #resultDay {
     display: flex;
+}
+
+
+@media screen and (max-width: 375px) {
+    .container {
+        width: 100%;
+        padding:2rem 1rem;
+        margin: 1rem;
+        border-bottom-right-radius: 22%;
+    }
+    .container .inputs {
+        gap: 8px;
+    }
+    .container .inputs p{
+        font-size: 12px;
+    }
+    .container .inputs input {
+        width: 52px;
+        height: 24px;
+        font-size: 16px;
+    }
+    .container .submit {
+        margin: 3rem 0;
+        position: relative;
+    }
+    
+    .container .submit button {
+        width: 52px;
+        height: 52px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .container .result div{
+        font-size: 42px;
+    }
+
 }
