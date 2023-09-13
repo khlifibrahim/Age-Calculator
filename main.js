@@ -1,137 +1,80 @@
-const year = document.querySelector('.year input');
-const month = document.querySelector('.month input');
-const day = document.querySelector('.day input');
-const submitBtn = document.querySelector('.submit')
-const titles = document.querySelectorAll('.box .title')
-// console.log(titles)
+const submitBtn = document.querySelector(".submit");
+const titles = document.querySelectorAll(".box .title");
 
-const resultYear = document.querySelector('#resultYear p');
-const resultMonth = document.querySelector('#resultMonth p');
-const resultDay = document.querySelector('#resultDay p');
+const resultYear = document.querySelector("#resultYear p");
+const resultMonth = document.querySelector("#resultMonth p");
+const resultDay = document.querySelector("#resultDay p");
 
-// console.log(year, month, day)
-// console.log(resultYear, resultMonth, resultDay)
+function myBirthday() {
+  const myYear = document.querySelector(".year input").value;
+  const myMonth = document.querySelector(".month input").value;
+  const myDay = document.querySelector(".day input").value;
 
+  const today = new Date();
+  let currentDay = today.getDate();
+  let currentMonth = 1 + today.getMonth();
+  let currentYear = today.getFullYear();
 
-const today = new Date();
-console.log(today)
-function myBirthday(year, month, day) {
+  const titleDay = document.querySelector(".day");
+  const titleMonth = document.querySelector(".month");
+  const titleYear = document.querySelector(".year");
+  const error = document.querySelector(".error");
 
-    const birthdate = new Date(year, month-1, day);
-    console.log("my birthdate => " + birthdate)
+  if ((myDay && myMonth && myYear) == "") {
+    console.log("empty values");
 
-    const myNextBirthdate = new Date(today.getFullYear(), month - 1, day);
-    console.log("myNextBirthdate => " + myNextBirthdate);
+    error.classList.add("show");
+    titleDay.classList.add("errorInput");
+    titleMonth.classList.add("errorInput");
+    titleYear.classList.add("errorInput");
 
-    if(today < birthdate) {
-        console.log("sirr t9ewad")
-        return false
-    }else {
-        const myAge = Math.floor((today - birthdate) / (1000*3600*24*365));
-        console.log(myAge);
-        resultYear.innerHTML = myAge + " ";
-        resultYear.style.color = "#854dff";
+    return false;
+  }
 
-        const monthsLeft = Math.floor((myNextBirthdate - today) / (1000*3600*24*30));
-        console.log(monthsLeft);
-        resultMonth.innerHTML = `${monthsLeft} `;
-        resultMonth.style.color = "#854dff";
+  if (myMonth < 1 && myMonth > 12) {
+    const errorMsgMonth = document.querySelector(".month .error");
+    console.log(errorMsgMonth);
+    errorMsgMonth.innerHTML = "Must be a valid month";
+    return false;
+  }
 
-        const daysLeft = Math.floor(((myNextBirthdate - today) % (1000*3600*24*30)) / (1000*3600*24));
-        console.log(daysLeft);
-        resultDay.innerHTML = `${daysLeft} `;
-        resultDay.style.color = "#854dff";
-    }
+  if (myYear > today.getFullYear()) {
+    const errorMsg = document.querySelector(".year .error");
+    errorMsg.innerHTML = "Must be in the past";
+    return false;
+  }
 
-    
+  if (myDay < 1 || (myDay > 31 && myMonth < 1) || myMonth > 12) {
+    const errorMsgDay = document.querySelector(".day .error");
+    const errorMsgMonth = document.querySelector(".month .error");
+
+    titleDay.classList.add("errorInput");
+    errorMsgDay.innerHTML = "Must be a valid day";
+
+    titleMonth.classList.add("errorInput");
+    errorMsgMonth.innerHTML = "Must be a valid month";
+    return false;
+  }
+
+  const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  if (myDay > currentDay) {
+    currentDay = currentDay + months[currentMonth - 1];
+    currentMonth = currentMonth - 1;
+  }
+
+  if (myMonth > currentMonth) {
+    currentMonth = currentMonth + 12;
+    currentYear = currentYear - 1;
+  }
+
+  let day = currentDay - myDay;
+  let month = currentMonth - myMonth;
+  let year = currentYear - myYear;
+
+  resultYear.innerHTML = year;
+  resultMonth.innerHTML = month;
+  resultDay.innerHTML = day;
 }
 
-// myBirthday(1999,11,16);
-
-
-
-// Submit the value from myBirthdate function to the DOM
-
-submitBtn.addEventListener('click', ()=> {
-    // Set the regex max number for each input 
-    let daysAndMonthRegex = /(0-9){2}/; 
-    let yearRegex = /\d{4}/; 
-    // check the input is empty 
-    if((year.value && month.value && day.value) === '') {
-
-        // check if the limite of inputs is two numbers
-        if(year.value.length === today.getTime() && year.value.length < today.getFullYear()) {
-            return true
-
-        }else {
-            console.log("invalid year")
-            console.log(year.value.length)
-        }
-        let inputs = Array.from(document.querySelectorAll('.inputs .box input'))
-        // console.log('ma3amrinx')
-        // year.classList.add('errorInput')
-        inputs.forEach(input => {
-            input.classList.add('errorInput')
-        });
-        titles.forEach(p => {
-            p.classList.add('errorInput')
-        });
-    }else {
-    }
-    
-    
-})
-const {myAge, monthsLeft, daysLeft} = myBirthday(1996, 11, 16);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function calculateAge(birthdate) {
-//     const today = new Date();
-//     birthdate = new Date(birthdate);
-//     // console.log(birthdate)
-//     const age = today.getFullYear() - birthdate.getFullYear() - (today.getMonth() < birthdate.getMonth() || (today.getMonth() === birthdate.getMonth() && today.getDate() < birthdate.getDate()));
-//     // console.log(age)
-    
-//     const nextBirthday = new Date(today.getFullYear(), birthdate.getMonth(), birthdate.getDate());
-//     console.log("nextBirthday => " + nextBirthday)
-//     console.log(today > nextBirthday)
-//     if (today > nextBirthday) {
-//         nextBirthday.setFullYear(today.getFullYear() + 1);
-//     }
-
-//     const timeUntilBirthday = nextBirthday - today;
-//     console.log("timeUntilBirthday => " + timeUntilBirthday / (1000*3600*24*30));
-//     const monthsLeft = Math.floor(timeUntilBirthday / (30 * 24 * 60 * 60 * 1000));
-//     const daysLeft = Math.floor((timeUntilBirthday % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-//     console.log("daysLeft " + daysLeft)
-    
-//         return { age, monthsLeft, daysLeft };
-// }
-// // Replace "YYYY-MM-DD" with your birthdate
-// const birthdate = "1999-11-16";
-// const { age, monthsLeft, daysLeft } = calculateAge(birthdate);
-
-// console.log(`Your age: ${age} years`);
-// console.log(`Months left until your next birthday: ${monthsLeft} months`);
-// console.log(`Days left until your next birthday: ${daysLeft} days`);
+submitBtn.addEventListener("click", myBirthday);
